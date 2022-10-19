@@ -43,12 +43,7 @@ export default {
     };
   },
   async mounted() {
-    try {
-      const response = await api.users.getAllUsers();
-      this.users = response.data;
-    } catch (error) {
-      console.log(error);
-    }
+    await this.getAllUsers();
   },
   methods: {
     submitForm(user: any) {
@@ -60,6 +55,14 @@ export default {
     },
     closeModal() {
       this.showModal = false;
+    },
+    async getAllUsers() {
+      try {
+        const response = await api.users.getAllUsers();
+        this.users = response.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
