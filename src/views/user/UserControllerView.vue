@@ -12,7 +12,7 @@
     </div>
     <div class="row">
       <div class="col text-center">
-        <ModalView :users="users" />
+        <UserListView :users="users" />
       </div>
     </div>
 
@@ -30,11 +30,13 @@
 import api from "../../api";
 import ModalForm from "./ModalForm.vue";
 import ModalView from "./ModalView.vue";
+import UserListView from "./UserListView.vue";
 
 export default {
   components: {
     ModalForm,
     ModalView,
+    UserListView,
   },
   data() {
     return {
@@ -46,9 +48,9 @@ export default {
     await this.getAllUsers();
   },
   methods: {
-    submitForm(user: any) {
+    async submitForm(user: any) {
+      await this.createUser(user);
       this.closeModal();
-      console.log({ user });
     },
     openModal() {
       this.showModal = true;
@@ -60,6 +62,14 @@ export default {
       try {
         const response = await api.users.getAllUsers();
         this.users = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async createUser(user: any) {
+      try {
+        await api.users.createUser(user);
+        await this.getAllUsers();
       } catch (error) {
         console.log(error);
       }
