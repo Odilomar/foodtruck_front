@@ -5,7 +5,13 @@
         <h1>Todos os usuários</h1>
       </div>
       <div class="col-3">
-        <button type="button" class="btn btn-primary">Adicionar usuário</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          v-b-modal="'create-update-modal-form'"
+        >
+          Adicionar usuário
+        </button>
       </div>
     </div>
     <div class="row">
@@ -32,6 +38,8 @@
         </table>
       </div>
     </div>
+
+    <ModalForm />
   </div>
 </template>
 
@@ -40,8 +48,12 @@
 <script>
 import api from "../../api";
 import moment from "moment";
+import ModalForm from "./ModalForm.vue";
 
 export default {
+  components: {
+    ModalForm,
+  },
   data() {
     return {
       users: [],
@@ -52,7 +64,6 @@ export default {
     try {
       const response = await api.users.getAllUsers();
       this.users = response.data;
-      console.log({ users: this.users });
     } catch (error) {
       console.log(error);
     }
