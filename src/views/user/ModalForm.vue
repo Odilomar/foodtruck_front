@@ -9,7 +9,7 @@
     @show="closeModal"
     @hidden="closeModal"
   >
-    <form v-on:submit="onSubmit">
+    <form @submit.stop.prevent="onSubmit">
       <div class="form-group">
         <label for="userNameInput">Nome</label>
         <input
@@ -58,6 +58,13 @@
 </template>
 
 <script lang="ts">
+const DEFAULT_USER = {
+  name: "",
+  cpf: "",
+  email: "",
+  password: "",
+};
+
 export default {
   props: {
     showModal: {
@@ -69,12 +76,18 @@ export default {
       modalId: "create-update-modal-form",
       title: "Criação de usuário",
       user: {
-        name: "",
-        cpf: "",
-        email: "",
-        password: "",
+        ...DEFAULT_USER,
       },
     };
+  },
+  watch: {
+    showModal() {
+      if (this.showModal) {
+        this.user = {
+          ...DEFAULT_USER,
+        };
+      }
+    },
   },
   methods: {
     onSubmit() {
