@@ -1,6 +1,15 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <b-modal :id="modalId" :title="title">
-    <form>
+  <b-modal
+    :id="modalId"
+    :ref="modalId"
+    :title="title"
+    v-model="showModal"
+    @ok="onSubmit"
+    @show="closeModal"
+    @hidden="closeModal"
+  >
+    <form v-on:submit="onSubmit">
       <div class="form-group">
         <label for="userNameInput">Nome</label>
         <input
@@ -9,6 +18,7 @@
           id="userNameInput"
           aria-describedby="Nome do usuário"
           placeholder="Digite seu nome"
+          v-model="user.name"
         />
       </div>
       <div class="form-group mt-3">
@@ -19,6 +29,7 @@
           id="userCpfInput"
           aria-describedby="CPF do usuário"
           placeholder="Digite seu CPF"
+          v-model="user.cpf"
         />
       </div>
       <div class="form-group mt-3">
@@ -29,6 +40,7 @@
           id="userEmailInput"
           aria-describedby="Email do usuário"
           placeholder="Digite seu email"
+          v-model="user.email"
         />
       </div>
       <div class="form-group mt-3">
@@ -38,6 +50,7 @@
           class="form-control"
           id="userPasswordInput"
           placeholder="Digite a senha desejada"
+          v-model="user.password"
         />
       </div>
     </form>
@@ -46,11 +59,30 @@
 
 <script lang="ts">
 export default {
+  props: {
+    showModal: {
+      default: true,
+    },
+  },
   data() {
     return {
       modalId: "create-update-modal-form",
       title: "Criação de usuário",
+      user: {
+        name: "",
+        cpf: "",
+        email: "",
+        password: "",
+      },
     };
+  },
+  methods: {
+    onSubmit() {
+      this.$emit("submitForm", this.user);
+    },
+    closeModal() {
+      this.$emit("closeModal");
+    },
   },
 };
 </script>

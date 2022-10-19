@@ -5,11 +5,7 @@
         <h1>Todos os usuários</h1>
       </div>
       <div class="col-3">
-        <button
-          type="button"
-          class="btn btn-primary"
-          v-b-modal="'create-update-modal-form'"
-        >
+        <button type="button" class="btn btn-primary" v-on:click="openModal()">
           Adicionar usuário
         </button>
       </div>
@@ -20,7 +16,11 @@
       </div>
     </div>
 
-    <ModalForm />
+    <ModalForm
+      :showModal="showModal"
+      @submitForm="submitForm"
+      @closeModal="closeModal"
+    />
   </div>
 </template>
 
@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       users: [],
+      showModal: false,
     };
   },
   async mounted() {
@@ -48,6 +49,18 @@ export default {
     } catch (error) {
       console.log(error);
     }
+  },
+  methods: {
+    submitForm(user: any) {
+      this.closeModal();
+      console.log({ user });
+    },
+    openModal() {
+      this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
+    },
   },
 };
 </script>
