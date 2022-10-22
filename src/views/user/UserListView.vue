@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.id">
+        <tr v-for="user in users" :key="user.id" @click="viewUser(user)">
           <th scope="row">{{ user.id }}</th>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
@@ -38,6 +38,9 @@ export default {
   methods: {
     formatDate: (value: any) =>
       ((value && moment(value)) || moment()).format("MM/DD/YYYY hh:mm"),
+    viewUser(user: any) {
+      this.$emit("viewUser", user);
+    },
   },
 };
 </script>

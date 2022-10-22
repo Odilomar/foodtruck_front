@@ -5,22 +5,31 @@
         <h1>Todos os usuários</h1>
       </div>
       <div class="col-3">
-        <button type="button" class="btn btn-primary" v-on:click="openFormModal()">
+        <button
+          type="button"
+          class="btn btn-primary"
+          v-on:click="openFormModal()"
+        >
           Adicionar usuário
         </button>
       </div>
     </div>
     <div class="row">
       <div class="col text-center">
-        <UserListView :users="users" @editUser="editUser"/>
+        <UserListView :users="users" @viewUser="viewUser" />
       </div>
     </div>
 
     <ModalForm
-      :showFormModal="showFormModal"
-      :user="user"
+      :showModal="showFormModal"
       @submitForm="submitForm"
-      @closeFormModal="closeFormModal"
+      @closeModal="closeFormModal"
+    />
+
+    <ModalView
+      :showModal="showViewModal"
+      :user="user"
+      @closeModal="closeViewModal"
     />
   </div>
 </template>
@@ -44,7 +53,7 @@ export default {
       users: [],
       showFormModal: false,
       showViewModal: false,
-      user: undefined
+      user: {},
     };
   },
   async mounted() {
@@ -66,6 +75,7 @@ export default {
     },
     closeViewModal() {
       this.showViewModal = false;
+      this.user = {};
     },
     async getAllUsers() {
       try {
@@ -83,9 +93,10 @@ export default {
         console.log(error);
       }
     },
-    editUser(user: any) {
-      this.user = user
-    }
+    viewUser(user: any) {
+      this.user = user;
+      this.openViewModal();
+    },
   },
 };
 </script>

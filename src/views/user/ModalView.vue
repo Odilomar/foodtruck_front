@@ -1,26 +1,45 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div>
-    <span v-if="users.length === 0">Nenhum usuário encontrado</span>
-    <table class="table" v-else>
-      <thead>
-        <tr>
-          <th v-for="(header, index) in headers" :key="index" scope="col">
-            {{ header }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="user in users" :key="user.id">
-          <th scope="row">{{ user.id }}</th>
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.cpf }}</td>
-          <td>{{ formatDate(user.created_at) }}</td>
-          <td>{{ formatDate(user.updated_at) }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <b-modal
+    :id="modalId"
+    :ref="modalId"
+    :title="title"
+    v-model="showModal"
+    @hidden="closeModal"
+  >
+    <div class="container">
+      <div class="row" v-if="!!user.name">
+        <div class="col">
+          <span><strong>Nome:</strong></span>
+          {{ user.name }}
+        </div>
+      </div>
+      <div class="row" v-if="!!user.email">
+        <div class="col">
+          <span><strong>Email:</strong></span>
+          {{ user.email }}
+        </div>
+      </div>
+      <div class="row" v-if="!!user.cpf">
+        <div class="col">
+          <span><strong>CPF:</strong></span>
+          {{ user.cpf }}
+        </div>
+      </div>
+      <div class="row" v-if="!!user.created_at">
+        <div class="col">
+          <span><strong>Criado em:</strong></span>
+          {{ formatDate(user.created_at) }}
+        </div>
+      </div>
+      <div class="row" v-if="!!user.updated_at">
+        <div class="col">
+          <span><strong>Atualizado em:</strong></span>
+          {{ formatDate(user.updated_at) }}
+        </div>
+      </div>
+    </div>
+  </b-modal>
 </template>
 
 <style></style>
@@ -29,15 +48,27 @@
 import moment from "moment";
 
 export default {
-  props: ["users"],
+  props: {
+    showModal: {
+      default: true,
+    },
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
-      headers: ["#", "Nome", "Email", "CPF", "Criado em", "Atualizado em"],
+      modalId: "view-user-modal",
+      title: "Visualização de usuário",
     };
   },
   methods: {
     formatDate: (value: any) =>
       ((value && moment(value)) || moment()).format("MM/DD/YYYY hh:mm"),
+    closeModal() {
+      this.$emit("closeModal");
+    },
   },
 };
 </script>

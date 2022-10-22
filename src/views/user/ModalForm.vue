@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      modalId: "create-update-modal-form",
+      modalId: "create-update-user-modal-form",
       title: "Criação de usuário",
       user: {
         ...DEFAULT_USER,
