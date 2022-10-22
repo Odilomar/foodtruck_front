@@ -5,21 +5,22 @@
         <h1>Todos os usuários</h1>
       </div>
       <div class="col-3">
-        <button type="button" class="btn btn-primary" v-on:click="openModal()">
+        <button type="button" class="btn btn-primary" v-on:click="openFormModal()">
           Adicionar usuário
         </button>
       </div>
     </div>
     <div class="row">
       <div class="col text-center">
-        <UserListView :users="users" />
+        <UserListView :users="users" @editUser="editUser"/>
       </div>
     </div>
 
     <ModalForm
-      :showModal="showModal"
+      :showFormModal="showFormModal"
+      :user="user"
       @submitForm="submitForm"
-      @closeModal="closeModal"
+      @closeFormModal="closeFormModal"
     />
   </div>
 </template>
@@ -41,7 +42,9 @@ export default {
   data() {
     return {
       users: [],
-      showModal: false,
+      showFormModal: false,
+      showViewModal: false,
+      user: undefined
     };
   },
   async mounted() {
@@ -50,13 +53,19 @@ export default {
   methods: {
     async submitForm(user: any) {
       await this.createUser(user);
-      this.closeModal();
+      this.closeFormModal();
     },
-    openModal() {
-      this.showModal = true;
+    openFormModal() {
+      this.showFormModal = true;
     },
-    closeModal() {
-      this.showModal = false;
+    closeFormModal() {
+      this.showFormModal = false;
+    },
+    openViewModal() {
+      this.showViewModal = true;
+    },
+    closeViewModal() {
+      this.showViewModal = false;
     },
     async getAllUsers() {
       try {
@@ -74,6 +83,9 @@ export default {
         console.log(error);
       }
     },
+    editUser(user: any) {
+      this.user = user
+    }
   },
 };
 </script>
