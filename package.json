@@ -15,6 +15,7 @@
     "bootstrap": "^5.2.2",
     "bootstrap-vue": "^2.22.0",
     "bootstrap-vue-3": "^0.3.12",
+    "husky": "^8.0.1",
     "moment": "^2.29.4",
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
@@ -38,5 +39,10 @@
     "vite": "^3.0.9",
     "vue-cli-plugin-bootstrap-vue": "~0.8.2",
     "vue-tsc": "^0.40.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run fix"
+    }
   }
 }
