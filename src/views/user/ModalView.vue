@@ -4,8 +4,14 @@
     :id="modalId"
     :ref="modalId"
     :title="title"
+    ok-title="Editar"
+    ok-variant="success"
+    cancel-title="Remover"
+    cancel-variant="danger"
     v-model="showModal"
     @hidden="closeModal"
+    @ok="editUser"
+    @cancel="deleteUser"
   >
     <div class="container">
       <div class="row" v-if="!!user.name">
@@ -69,6 +75,12 @@ export default {
     closeModal() {
       this.$emit("closeModal");
     },
+    editUser() {
+      console.log('edit user')
+    },
+    deleteUser() {
+      console.log('delete user')
+    }
   },
 };
 </script>
