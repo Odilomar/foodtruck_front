@@ -75,7 +75,7 @@ export default {
     },
     closeViewModal() {
       this.showViewModal = false;
-      this.user = {}
+      this.user = {};
     },
     async getAllUsers() {
       try {

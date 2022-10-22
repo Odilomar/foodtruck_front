@@ -76,11 +76,11 @@ export default {
       this.$emit("closeModal");
     },
     editUser() {
-      console.log('edit user')
+      console.log("edit user");
     },
     deleteUser() {
-      console.log('delete user')
-    }
+      console.log("delete user");
+    },
   },
 };
 </script>
