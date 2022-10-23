@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     formatDate: (value: any) =>
-      ((value && moment(value)) || moment()).format("MM/DD/YYYY hh:mm"),
+      ((value && moment(value)) || moment()).format("DD/MM/YYYY hh:mm"),
     closeModal() {
       this.$emit("closeModal");
     },
@@ -79,7 +79,7 @@ export default {
       console.log("edit user");
     },
     deleteUser() {
-      console.log("delete user");
+      this.$emit("deleteUser");
     },
   },
 };

@@ -30,6 +30,14 @@
       :showModal="showViewModal"
       :user="user"
       @closeModal="closeViewModal"
+      @deleteUser="openDeleteModal"
+    />
+
+    <ModalDelete
+      :showModal="showDeleteModal"
+      :user="user"
+      @closeModal="closeDeleteModal"
+      @deleteUser="deleteUser"
     />
   </div>
 </template>
@@ -40,12 +48,14 @@
 import api from "../../api";
 import ModalForm from "./ModalForm.vue";
 import ModalView from "./ModalView.vue";
+import ModalDelete from "./ModalDelete.vue";
 import UserListView from "./UserListView.vue";
 
 export default {
   components: {
     ModalForm,
     ModalView,
+    ModalDelete,
     UserListView,
   },
   data() {
@@ -53,6 +63,7 @@ export default {
       users: [],
       showFormModal: false,
       showViewModal: false,
+      showDeleteModal: false,
       user: {},
     };
   },
@@ -75,7 +86,13 @@ export default {
     },
     closeViewModal() {
       this.showViewModal = false;
-      this.user = {};
+      // this.user = {};
+    },
+    openDeleteModal() {
+      this.showDeleteModal = true;
+    },
+    closeDeleteModal() {
+      this.showDeleteModal = false;
     },
     async getAllUsers() {
       try {
@@ -88,6 +105,16 @@ export default {
     async createUser(user: any) {
       try {
         await api.users.createUser(user);
+        await this.getAllUsers();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async deleteUser(user: any) {
+      const id = user?.id;
+
+      try {
+        await api.users.deleteUser(id);
         await this.getAllUsers();
       } catch (error) {
         console.log(error);
