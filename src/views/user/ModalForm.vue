@@ -70,6 +70,12 @@ export default {
     showModal: {
       default: true,
     },
+    modalType: {
+      default: "create",
+    },
+    data: {
+      type: Object,
+    },
   },
   data() {
     return {
@@ -82,7 +88,11 @@ export default {
   },
   watch: {
     showModal() {
-      if (this.showModal) {
+      if (this.showModal && this.modalType === "edit") {
+        Object.assign(this.user, this.data);
+      }
+
+      if (this.showModal && this.modalType === "create") {
         this.user = {
           ...DEFAULT_USER,
         };
@@ -91,7 +101,11 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$emit("submitForm", this.user);
+      const event =
+        (this.modalType === "create" && "submitCreateForm") ||
+        "submitUpdateForm";
+
+      this.$emit(event, this.user);
     },
     closeModal() {
       this.$emit("closeModal");

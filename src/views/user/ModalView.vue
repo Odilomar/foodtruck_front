@@ -76,7 +76,7 @@ export default {
       this.$emit("closeModal");
     },
     editUser() {
-      console.log("edit user");
+      this.$emit("editUser");
     },
     deleteUser() {
       this.$emit("deleteUser");

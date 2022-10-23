@@ -8,7 +8,7 @@
         <button
           type="button"
           class="btn btn-primary"
-          v-on:click="openFormModal()"
+          v-on:click="openCreateFormModal()"
         >
           Adicionar usuário
         </button>
@@ -22,7 +22,10 @@
 
     <ModalForm
       :showModal="showFormModal"
-      @submitForm="submitForm"
+      :data="user"
+      :modalType="modalFormType"
+      @submitCreateForm="submitCreateForm"
+      @submitUpdateForm="submitUpdateForm"
       @closeModal="closeFormModal"
     />
 
@@ -31,6 +34,7 @@
       :user="user"
       @closeModal="closeViewModal"
       @deleteUser="openDeleteModal"
+      @editUser="openEditFormModal"
     />
 
     <ModalDelete
@@ -62,6 +66,7 @@ export default {
     return {
       users: [],
       showFormModal: false,
+      modalFormType: "create",
       showViewModal: false,
       showDeleteModal: false,
       user: {},
@@ -71,9 +76,21 @@ export default {
     await this.getAllUsers();
   },
   methods: {
-    async submitForm(user: any) {
+    async submitCreateForm(user: any) {
       await this.createUser(user);
       this.closeFormModal();
+    },
+    async submitUpdateForm(user: any) {
+      await this.updateUser(user);
+      this.closeFormModal();
+    },
+    openCreateFormModal() {
+      this.modalFormType = "create";
+      this.openFormModal();
+    },
+    openEditFormModal() {
+      this.modalFormType = "edit";
+      this.openFormModal();
     },
     openFormModal() {
       this.showFormModal = true;
@@ -105,6 +122,14 @@ export default {
     async createUser(user: any) {
       try {
         await api.users.createUser(user);
+        await this.getAllUsers();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateUser(user: any) {
+      try {
+        await api.users.updateUser(user.id, user);
         await this.getAllUsers();
       } catch (error) {
         console.log(error);
