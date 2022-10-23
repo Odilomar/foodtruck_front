@@ -43,7 +43,7 @@
           v-model="user.email"
         />
       </div>
-      <div class="form-group mt-3">
+      <div class="form-group mt-3" v-if="modalType === 'create'">
         <label for="userPasswordInput">Password</label>
         <input
           type="password"
