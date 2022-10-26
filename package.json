@@ -17,6 +17,7 @@
     "bootstrap-vue-3": "^0.3.12",
     "husky": "^8.0.1",
     "moment": "^2.29.4",
+    "numeral": "^2.0.6",
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
     "vue": "^3.2.38",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",
     "@types/node": "^16.11.56",
+    "@types/numeral": "^2.0.2",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.0",
