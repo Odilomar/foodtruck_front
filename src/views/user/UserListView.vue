@@ -10,8 +10,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.id" @click="viewUser(user)">
-          <th scope="row">{{ user.id }}</th>
+        <tr
+          v-for="(user, index) in users"
+          :key="user.id"
+          @click="viewUser(user)"
+        >
+          <th scope="row">{{ index + 1 }}</th>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.cpf }}</td>
