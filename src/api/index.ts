@@ -3,5 +3,5 @@ import * as products from "./products";
 
 export default {
   users,
-  products
+  products,
 };
