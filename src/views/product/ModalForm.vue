@@ -121,7 +121,12 @@ export default {
     showModal() {
       if (this.showModal && this.modalType === "edit") {
         Object.assign(this.product, this.data);
+        this.product.unit_price = this.product.unit_price
+          ? this.product.unit_price / 100
+          : 0;
       }
+
+      console.log({ unit_price: this.product.unit_price });
 
       if (this.showModal && this.modalType === "create") {
         this.product = {
