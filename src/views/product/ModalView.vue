@@ -11,7 +11,7 @@
     v-model="showModal"
     @hidden="closeModal"
     @ok="editUser"
-    @cancel="deleteUser"
+    @cancel="deleteProduct"
   >
     <div class="container">
       <div class="row" v-if="!!product.title">
@@ -101,8 +101,8 @@ export default {
     editUser() {
       this.$emit("editUser");
     },
-    deleteUser() {
-      this.$emit("deleteUser");
+    deleteProduct() {
+      this.$emit("deleteProduct");
     },
   },
 };

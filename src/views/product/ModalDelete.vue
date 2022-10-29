@@ -8,14 +8,14 @@
     ok-variant="danger"
     v-model="showModal"
     @hidden="closeModal"
-    @ok="deleteUser"
+    @ok="deleteProduct"
   >
     <div class="container">
       <div class="row">
         <div class="col">
           Você tem certeza que deseja remover esse usuário
-          <span v-if="product && product.name"
-            >(<strong>{{ product.name }}</strong
+          <span v-if="product && product.title"
+            >(<strong>{{ product.title }}</strong
             >) </span
           >?
         </div>
@@ -47,8 +47,8 @@ export default {
     closeModal() {
       this.$emit("closeModal");
     },
-    deleteUser() {
-      this.$emit("deleteUser", this.product);
+    deleteProduct() {
+      this.$emit("deleteProduct", this.product);
     },
   },
 };
