@@ -9,60 +9,72 @@
     @show="closeModal"
     @hidden="closeModal"
   >
-    <form @submit.stop.prevent="onSubmit">
+    <form ref="form" @submit.stop.prevent="onSubmit">
       <div class="form-group">
-        <label for="userNameInput">Nome</label>
+        <label for="productTitleInput">Título</label>
         <input
           type="text"
           class="form-control"
-          id="userNameInput"
-          aria-describedby="Nome do usuário"
-          placeholder="Digite seu nome"
-          v-model="user.name"
+          id="productTitleInput"
+          aria-describedby="Título do produto"
+          placeholder="Digite o título do produto"
+          v-model="product.title"
         />
       </div>
       <div class="form-group mt-3">
-        <label for="userCpfInput">CPF</label>
+        <label for="productDescriptionInput">Descrição</label>
         <input
           type="text"
           class="form-control"
-          id="userCpfInput"
-          aria-describedby="CPF do usuário"
-          placeholder="Digite seu CPF"
-          v-model="user.cpf"
+          id="productDescriptionInput"
+          aria-describedby="Descrição do produto"
+          placeholder="Digite a descrição do produto"
+          v-model="product.description"
         />
       </div>
       <div class="form-group mt-3">
-        <label for="userEmailInput">Email</label>
+        <label for="productURLInput">URL</label>
         <input
-          type="email"
+          type="url"
           class="form-control"
-          id="userEmailInput"
-          aria-describedby="Email do usuário"
-          placeholder="Digite seu email"
-          v-model="user.email"
+          id="productURLInput"
+          aria-describedby="URL do produto"
+          placeholder="Digite a url da imagem do produto"
+          v-model="product.url"
         />
       </div>
-      <div class="form-group mt-3" v-if="modalType === 'create'">
-        <label for="userPasswordInput">Password</label>
-        <input
-          type="password"
+      <div class="form-group mt-3">
+        <label for="productUnitPriceInput">Preço unitário</label>
+        <CurrencyInput
+          placeholder="Digite o preço unitário do produto"
           class="form-control"
-          id="userPasswordInput"
-          placeholder="Digite a senha desejada"
-          v-model="user.password"
+          id="productUnitPriceInput"
+          v-model="product.unit_price"
         />
+      </div>
+      <div class="form-group mt-3">
+        <label for="productTypeInput">Tipo do produto</label>
+        <b-form-select
+          v-model="product.type"
+          :options="options"
+        ></b-form-select>
       </div>
     </form>
   </b-modal>
 </template>
 
 <script lang="ts">
-const DEFAULT_USER = {
-  name: "",
-  cpf: "",
-  email: "",
-  password: "",
+import { ProductType, ProductTypeEnum } from "../../utils/product-type";
+import CurrencyInput from "@/components/CurrencyInput.vue";
+
+const DEFAULT_PRODUCT = {
+  title: "",
+  description: "",
+  url: "",
+  unit_price: 0,
+  type: ProductTypeEnum.FOOD,
+  created_by_id: 0,
+  updated_by_id: 0,
 };
 
 export default {
@@ -77,24 +89,43 @@ export default {
       type: Object,
     },
   },
+  components: { CurrencyInput },
   data() {
     return {
-      modalId: "create-update-user-modal-form",
+      modalId: "create-update-product-modal-form",
       title: "Criação de usuário",
-      user: {
-        ...DEFAULT_USER,
+      product: {
+        ...DEFAULT_PRODUCT,
       },
     };
+  },
+  computed: {
+    options() {
+      return [
+        {
+          value: ProductTypeEnum.FOOD,
+          text: ProductType[ProductTypeEnum.FOOD],
+        },
+        {
+          value: ProductTypeEnum.DRINK,
+          text: ProductType[ProductTypeEnum.DRINK],
+        },
+        {
+          value: ProductTypeEnum.SIDE_DISH,
+          text: ProductType[ProductTypeEnum.SIDE_DISH],
+        },
+      ];
+    },
   },
   watch: {
     showModal() {
       if (this.showModal && this.modalType === "edit") {
-        Object.assign(this.user, this.data);
+        Object.assign(this.product, this.data);
       }
 
       if (this.showModal && this.modalType === "create") {
-        this.user = {
-          ...DEFAULT_USER,
+        this.product = {
+          ...DEFAULT_PRODUCT,
         };
       }
     },
@@ -105,7 +136,8 @@ export default {
         (this.modalType === "create" && "submitCreateForm") ||
         "submitUpdateForm";
 
-      this.$emit(event, this.user);
+      this.product.unit_price *= 100;
+      this.$emit(event, this.product);
     },
     closeModal() {
       this.$emit("closeModal");
