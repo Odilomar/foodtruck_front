@@ -14,28 +14,46 @@
     @cancel="deleteUser"
   >
     <div class="container">
-      <div class="row" v-if="!!product.name">
+      <div class="row" v-if="!!product.title">
         <div class="col">
-          <span><strong>Nome:</strong></span>
-          {{ product.name }}
+          <span><strong>Título:</strong></span>
+          {{ product.title }}
         </div>
       </div>
-      <div class="row" v-if="!!product.email">
+      <div class="row" v-if="!!product.description">
         <div class="col">
-          <span><strong>Email:</strong></span>
-          {{ product.email }}
+          <span><strong>Descrição:</strong></span>
+          {{ product.description }}
         </div>
       </div>
-      <div class="row" v-if="!!product.cpf">
+      <div class="row" v-if="!!product.unit_price">
         <div class="col">
-          <span><strong>CPF:</strong></span>
-          {{ product.cpf }}
+          <span><strong>Preço Unitário:</strong></span>
+          {{ formatUnitPrice(product.unit_price) }}
+        </div>
+      </div>
+      <div class="row" v-if="!!product.type">
+        <div class="col">
+          <span><strong>Tipo:</strong></span>
+          {{ formatProductType(product.type) }}
+        </div>
+      </div>
+      <div class="row" v-if="!!product.created_by?.name">
+        <div class="col">
+          <span><strong>Criado por:</strong></span>
+          {{ product.created_by?.name }}
         </div>
       </div>
       <div class="row" v-if="!!product.created_at">
         <div class="col">
           <span><strong>Criado em:</strong></span>
           {{ formatDate(product.created_at) }}
+        </div>
+      </div>
+      <div class="row" v-if="!!product.updated_by?.name">
+        <div class="col">
+          <span><strong>Atualizado por:</strong></span>
+          {{ product.updated_by?.name }}
         </div>
       </div>
       <div class="row" v-if="!!product.updated_at">
@@ -52,6 +70,8 @@
 
 <script lang="ts">
 import moment from "moment";
+import numeral from "numeral";
+import { ProductType, ProductTypeEnum } from "../../utils/product-type";
 
 export default {
   props: {
@@ -72,6 +92,9 @@ export default {
   methods: {
     formatDate: (value: any) =>
       ((value && moment(value)) || moment()).format("DD/MM/YYYY hh:mm"),
+    formatUnitPrice: (value: any) =>
+      `R$ ${numeral((value || 0) / 100).format("0,0.00")}`,
+    formatProductType: (type: ProductTypeEnum) => ProductType[type],
     closeModal() {
       this.$emit("closeModal");
     },
