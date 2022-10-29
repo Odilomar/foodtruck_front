@@ -14,8 +14,8 @@
       <div class="row">
         <div class="col">
           Você tem certeza que deseja remover esse usuário
-          <span v-if="user && user.name"
-            >(<strong>{{ user.name }}</strong
+          <span v-if="product && product.name"
+            >(<strong>{{ product.name }}</strong
             >) </span
           >?
         </div>
@@ -32,14 +32,14 @@ export default {
     showModal: {
       default: true,
     },
-    user: {
+    product: {
       type: Object,
       required: true,
     },
   },
   data() {
     return {
-      modalId: "delete-user-modal",
+      modalId: "delete-product-modal",
       title: "Remover usuário",
     };
   },
@@ -48,7 +48,7 @@ export default {
       this.$emit("closeModal");
     },
     deleteUser() {
-      this.$emit("deleteUser", this.user);
+      this.$emit("deleteUser", this.product);
     },
   },
 };

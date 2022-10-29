@@ -22,7 +22,7 @@
 
     <ModalForm
       :showModal="showFormModal"
-      :data="user"
+      :data="product"
       :modalType="modalFormType"
       @submitCreateForm="submitCreateForm"
       @submitUpdateForm="submitUpdateForm"
@@ -31,7 +31,7 @@
 
     <ModalView
       :showModal="showViewModal"
-      :user="user"
+      :product="product"
       @closeModal="closeViewModal"
       @deleteProduct="openDeleteModal"
       @editUser="openEditFormModal"
@@ -39,7 +39,7 @@
 
     <ModalDelete
       :showModal="showDeleteModal"
-      :user="user"
+      :product="product"
       @closeModal="closeDeleteModal"
       @deleteProduct="deleteProduct"
     />
@@ -69,19 +69,19 @@ export default {
       modalFormType: "create",
       showViewModal: false,
       showDeleteModal: false,
-      user: {},
+      product: {},
     };
   },
   async mounted() {
     await this.getAllProducts();
   },
   methods: {
-    async submitCreateForm(user: any) {
-      await this.createProduct(user);
+    async submitCreateForm(product: any) {
+      await this.createProduct(product);
       this.closeFormModal();
     },
-    async submitUpdateForm(user: any) {
-      await this.updateProduct(user);
+    async submitUpdateForm(product: any) {
+      await this.updateProduct(product);
       this.closeFormModal();
     },
     openCreateFormModal() {
@@ -103,7 +103,7 @@ export default {
     },
     closeViewModal() {
       this.showViewModal = false;
-      // this.user = {};
+      // this.product = {};
     },
     openDeleteModal() {
       this.showDeleteModal = true;
@@ -119,24 +119,24 @@ export default {
         console.log(error);
       }
     },
-    async createProduct(user: any) {
+    async createProduct(product: any) {
       try {
-        await api.products.createProduct(user);
+        await api.products.createProduct(product);
         await this.getAllProducts();
       } catch (error) {
         console.log(error);
       }
     },
-    async updateProduct(user: any) {
+    async updateProduct(product: any) {
       try {
-        await api.products.updateProduct(user.id, user);
+        await api.products.updateProduct(product.id, product);
         await this.getAllProducts();
       } catch (error) {
         console.log(error);
       }
     },
-    async deleteProduct(user: any) {
-      const id = user?.id;
+    async deleteProduct(product: any) {
+      const id = product?.id;
 
       try {
         await api.products.deleteProduct(id);
@@ -145,8 +145,8 @@ export default {
         console.log(error);
       }
     },
-    viewProduct(user: any) {
-      this.user = user;
+    viewProduct(product: any) {
+      this.product = product;
       this.openViewModal();
     },
   },

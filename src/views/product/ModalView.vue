@@ -14,34 +14,34 @@
     @cancel="deleteUser"
   >
     <div class="container">
-      <div class="row" v-if="!!user.name">
+      <div class="row" v-if="!!product.name">
         <div class="col">
           <span><strong>Nome:</strong></span>
-          {{ user.name }}
+          {{ product.name }}
         </div>
       </div>
-      <div class="row" v-if="!!user.email">
+      <div class="row" v-if="!!product.email">
         <div class="col">
           <span><strong>Email:</strong></span>
-          {{ user.email }}
+          {{ product.email }}
         </div>
       </div>
-      <div class="row" v-if="!!user.cpf">
+      <div class="row" v-if="!!product.cpf">
         <div class="col">
           <span><strong>CPF:</strong></span>
-          {{ user.cpf }}
+          {{ product.cpf }}
         </div>
       </div>
-      <div class="row" v-if="!!user.created_at">
+      <div class="row" v-if="!!product.created_at">
         <div class="col">
           <span><strong>Criado em:</strong></span>
-          {{ formatDate(user.created_at) }}
+          {{ formatDate(product.created_at) }}
         </div>
       </div>
-      <div class="row" v-if="!!user.updated_at">
+      <div class="row" v-if="!!product.updated_at">
         <div class="col">
           <span><strong>Atualizado em:</strong></span>
-          {{ formatDate(user.updated_at) }}
+          {{ formatDate(product.updated_at) }}
         </div>
       </div>
     </div>
@@ -58,14 +58,14 @@ export default {
     showModal: {
       default: true,
     },
-    user: {
+    product: {
       type: Object,
       required: true,
     },
   },
   data() {
     return {
-      modalId: "view-user-modal",
+      modalId: "view-product-modal",
       title: "Visualização de usuário",
     };
   },
