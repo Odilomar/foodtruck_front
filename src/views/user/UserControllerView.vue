@@ -103,7 +103,6 @@ export default {
     },
     closeViewModal() {
       this.showViewModal = false;
-      // this.user = {};
     },
     openDeleteModal() {
       this.showDeleteModal = true;

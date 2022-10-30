@@ -51,7 +51,7 @@
 <style></style>
 
 <script lang="ts">
-import moment from "moment";
+import formatDate from "@/utils/format-date";
 
 export default {
   props: {
@@ -70,8 +70,7 @@ export default {
     };
   },
   methods: {
-    formatDate: (value: any) =>
-      ((value && moment(value)) || moment()).format("DD/MM/YYYY hh:mm"),
+    formatDate,
     closeModal() {
       this.$emit("closeModal");
     },

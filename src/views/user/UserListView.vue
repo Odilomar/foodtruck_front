@@ -30,7 +30,7 @@
 <style></style>
 
 <script lang="ts">
-import moment from "moment";
+import formatDate from "@/utils/format-date";
 
 export default {
   props: ["users"],
@@ -40,8 +40,7 @@ export default {
     };
   },
   methods: {
-    formatDate: (value: any) =>
-      ((value && moment(value)) || moment()).format("MM/DD/YYYY hh:mm"),
+    formatDate,
     viewUser(user: any) {
       this.$emit("viewUser", user);
     },

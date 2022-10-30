@@ -69,7 +69,7 @@
 <style></style>
 
 <script lang="ts">
-import moment from "moment";
+import formatDate from "@/utils/format-date";
 import formatUnitPrice from "@/utils/format-unit-price";
 import { ProductType, ProductTypeEnum } from "../../utils/product-type";
 
@@ -90,8 +90,7 @@ export default {
     };
   },
   methods: {
-    formatDate: (value: any) =>
-      ((value && moment(value)) || moment()).format("DD/MM/YYYY hh:mm"),
+    formatDate,
     formatUnitPrice,
     formatProductType: (type: ProductTypeEnum) => ProductType[type],
     closeModal() {
