@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
-import UserControllerView from "../views/user/UserControllerView.vue";
-import ProductControllerView from "../views/product/ProductControllerView.vue";
+import UserControllerView from "@/views/user/UserControllerView.vue";
+import ProductControllerView from "@/views/product/ProductControllerView.vue";
+import HomeView from "@/views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
+      name: "homeview",
+      component: HomeView,
+    },
+    {
+      path: "/products",
       name: "productcontrollerview",
       component: ProductControllerView,
     },
