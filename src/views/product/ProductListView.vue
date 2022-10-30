@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import moment from "moment";
-import numeral from "numeral";
+import formatUnitPrice from "@/utils/format-unit-price";
 import { ProductType, ProductTypeEnum } from "../../utils/product-type";
 
 export default {
@@ -57,8 +57,7 @@ export default {
   methods: {
     formatDate: (value: any) =>
       ((value && moment(value)) || moment()).format("MM/DD/YYYY hh:mm"),
-    formatUnitPrice: (value: any) =>
-      `R$ ${numeral((value || 0) / 100).format("0,0.00")}`,
+    formatUnitPrice,
     formatProductType: (type: ProductTypeEnum) => ProductType[type],
     viewProduct(product: any) {
       this.$emit("viewProduct", product);
