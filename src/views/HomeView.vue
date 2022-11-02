@@ -3,11 +3,11 @@
     <div class="container">
       <div class="row">
         <div
-          class="col-6 my-2 p-4"
+          class="col-6 p-4"
           v-for="(product, index) in products"
           :key="index"
         >
-          <a href="">
+          <a @click="openViewModal(product)">
             <div class="row justify-content-between product rounded">
               <div class="col d-grid product-info">
                 <div class="product-details">
@@ -32,12 +32,19 @@
         </div>
       </div>
     </div>
+
+    <ModalView
+      :showModal="showViewModal"
+      :product="product"
+      @closeModal="closeViewModal"
+    />
   </main>
 </template>
 
 <style>
 a {
   text-decoration: none !important;
+  cursor: pointer;
 }
 
 .product {
@@ -77,11 +84,17 @@ a {
 <script lang="ts">
 import api from "@/api";
 import formatUnitPrice from "@/utils/format-unit-price";
+import ModalView from "@/views/ModalView.vue";
 
 export default {
+  components: {
+    ModalView,
+  },
   data() {
     return {
       products: [],
+      showViewModal: false,
+      product: {},
     };
   },
   created() {
@@ -89,6 +102,13 @@ export default {
   },
   methods: {
     formatUnitPrice,
+    closeViewModal() {
+      this.showViewModal = false;
+    },
+    openViewModal(value: any) {
+      this.product = value;
+      this.showViewModal = true;
+    },
     async getAllProducts() {
       try {
         const response = await api.products.getAllProducts();
