@@ -35,22 +35,31 @@
             </div>
             <div class="col-12">
               <div class="d-flex justify-content-end">
-                <div class="product-amount mx-2">
+                <div class="product-amount mx-2 text-danger rounded border">
                   <button
                     type="button"
-                    class="decrease"
+                    class="decrease btn btn-lg text-danger border-0"
+                    v-bind:class="{ disabled: amount <= 1 }"
                     @click="decrease"
                     :disabled="amount <= 1"
                   >
                     -
                   </button>
-                  <span>{{ amount }}</span>
-                  <button type="button" class="increase" @click="increase">
+                  <span class="text-dark mx-2">{{ amount }}</span>
+                  <button
+                    type="button"
+                    class="increase btn btn-lg text-danger border-0"
+                    @click="increase"
+                  >
                     +
                   </button>
                 </div>
-                <button type="button" class="add-product" @click="add">
-                  add
+                <button
+                  type="button"
+                  class="add-product btn btn-danger btn-lg"
+                  @click="add"
+                >
+                  Adicionar {{ formatUnitPrice(product.unit_price * amount) }}
                 </button>
               </div>
             </div>
