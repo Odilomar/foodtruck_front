@@ -59,7 +59,10 @@
                   class="add-product btn btn-danger btn-lg"
                   @click="add"
                 >
-                  Adicionar {{ formatUnitPrice(product.unit_price * amount) }}
+                  <span>Adicionar</span>
+                  <span class="mx-2" v-if="product.unit_price">{{
+                    formatUnitPrice(product.unit_price * amount)
+                  }}</span>
                 </button>
               </div>
             </div>
