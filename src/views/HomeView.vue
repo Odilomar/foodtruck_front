@@ -1,6 +1,18 @@
 <template>
   <main>
     <div class="container">
+      <div class="row justify-content-end">
+        <div class="col-2 d-flex justify-content-end">
+          <button type="button" class="btn btn-danger">
+            Carrinho
+            <span
+              class="badge rounded-pill text-bg-light"
+              v-if="cartAmount > 0"
+              >{{ cartAmount }}</span
+            >
+          </button>
+        </div>
+      </div>
       <div class="row">
         <div
           class="col-6 p-4"
@@ -94,16 +106,27 @@ export default {
     return {
       products: [],
       showViewModal: false,
+      cartAmount: 0,
       product: {},
     };
   },
   created() {
     this.getAllProducts();
+    this.getCart();
   },
   methods: {
     formatUnitPrice,
+    getCart() {
+      const localStorageCart = localStorage["cart"];
+      if (localStorageCart) {
+        const cart = JSON.parse(localStorageCart);
+        const keys = Object.keys(cart);
+        this.cartAmount = keys.length;
+      }
+    },
     closeViewModal() {
       this.showViewModal = false;
+      this.getCart();
     },
     openViewModal(value: any) {
       this.product = value;

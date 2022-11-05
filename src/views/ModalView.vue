@@ -129,6 +129,7 @@ export default {
         [this.product.id]: {
           ...this.product,
           amount: this.amount,
+          total: this.product.unit_price * this.amount,
         },
       });
 
