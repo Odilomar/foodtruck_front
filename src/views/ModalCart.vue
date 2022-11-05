@@ -33,7 +33,7 @@
           <div class="d-flex flex-column h-100 justify-content-between">
             <h3>{{ product.title }}</h3>
             <div class="d-flex justify-content-between">
-              <span
+              <span class="d-flex align-items-center"
                 ><strong>{{
                   formatUnitPrice(product.unit_price)
                 }}</strong></span
