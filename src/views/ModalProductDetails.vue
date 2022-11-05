@@ -79,6 +79,7 @@
 import formatDate from "@/utils/format-date";
 import formatUnitPrice from "@/utils/format-unit-price";
 import { ProductType, ProductTypeEnum } from "../utils/product-type";
+import getCart from "../utils/get-cart";
 
 export default {
   props: {
@@ -99,11 +100,10 @@ export default {
   watch: {
     product() {
       this.amount = 1;
-      const cart = localStorage["cart"];
+      const cart = getCart();
 
       if (cart) {
-        const parsedCart = JSON.parse(cart);
-        const product = parsedCart[this.product.id];
+        const product = cart[this.product.id];
 
         if (product && product.amount) {
           this.amount = product.amount;

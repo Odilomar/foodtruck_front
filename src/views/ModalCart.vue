@@ -27,6 +27,7 @@
 import formatDate from "@/utils/format-date";
 import formatUnitPrice from "@/utils/format-unit-price";
 import { ProductType, ProductTypeEnum } from "../utils/product-type";
+import getCart from "../utils/get-cart";
 
 export default {
   props: {
@@ -37,12 +38,24 @@ export default {
   data() {
     return {
       modalId: "view-cart-modal",
-      amount: 1,
+      amount: 0,
+      products: [],
     };
+  },
+  created() {
+    this.getCart();
   },
   methods: {
     formatDate,
     formatUnitPrice,
+    getCart() {
+      const cart = getCart();
+
+      if (cart) {
+        const keys = Object.keys(cart);
+        keys.forEach((key) => this.products.push(cart[key]));
+      }
+    },
     closeModal() {
       this.$emit("closeModal");
     },
