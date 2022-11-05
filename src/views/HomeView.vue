@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row justify-content-end">
         <div class="col-2 d-flex justify-content-end">
-          <button type="button" class="btn btn-danger">
+          <button type="button" class="btn btn-danger" @click="openCartModal()">
             Carrinho
             <span
               class="badge rounded-pill text-bg-light"
@@ -19,7 +19,7 @@
           v-for="(product, index) in products"
           :key="index"
         >
-          <a @click="openViewModal(product)">
+          <a @click="openProductDetailsModal(product)">
             <div class="row justify-content-between product rounded">
               <div class="col d-grid product-info">
                 <div class="product-details">
@@ -46,10 +46,12 @@
     </div>
 
     <ModalProductDetails
-      :showModal="showViewModal"
+      :showModal="showProductDetailsModal"
       :product="product"
-      @closeModal="closeViewModal"
+      @closeModal="closeProductDetailsModal"
     />
+
+    <ModalCart :showModal="showCartModal" @closeModal="closeCartModal" />
   </main>
 </template>
 
@@ -97,15 +99,18 @@ a {
 import api from "@/api";
 import formatUnitPrice from "@/utils/format-unit-price";
 import ModalProductDetails from "@/views/ModalProductDetails.vue";
+import ModalCart from "@/views/ModalCart.vue";
 
 export default {
   components: {
     ModalProductDetails,
+    ModalCart,
   },
   data() {
     return {
       products: [],
-      showViewModal: false,
+      showProductDetailsModal: false,
+      showCartModal: false,
       cartAmount: 0,
       product: {},
     };
@@ -124,13 +129,20 @@ export default {
         this.cartAmount = keys.length;
       }
     },
-    closeViewModal() {
-      this.showViewModal = false;
+    closeProductDetailsModal() {
+      this.showProductDetailsModal = false;
       this.getCart();
     },
-    openViewModal(value: any) {
+    openProductDetailsModal(value: any) {
       this.product = value;
-      this.showViewModal = true;
+      this.showProductDetailsModal = true;
+    },
+    closeCartModal() {
+      this.showCartModal = false;
+      this.getCart();
+    },
+    openCartModal() {
+      this.showCartModal = true;
     },
     async getAllProducts() {
       try {
