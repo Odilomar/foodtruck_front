@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <ModalView
+    <ModalProductDetails
       :showModal="showViewModal"
       :product="product"
       @closeModal="closeViewModal"
@@ -96,11 +96,11 @@ a {
 <script lang="ts">
 import api from "@/api";
 import formatUnitPrice from "@/utils/format-unit-price";
-import ModalView from "@/views/ModalView.vue";
+import ModalProductDetails from "@/views/ModalProductDetails.vue";
 
 export default {
   components: {
-    ModalView,
+    ModalProductDetails,
   },
   data() {
     return {
