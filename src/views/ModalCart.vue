@@ -11,13 +11,56 @@
     @hidden="closeModal"
     @ok="editUser"
     @cancel="deleteProduct"
-    size="xl"
     hide-header
     hide-footer
   >
-    <div class="container">
-      <div class="row">aaaaggg</div>
+    <div class="container" v-if="products.length > 0">
+      <div
+        class="row mt-4"
+        v-for="(product, index) in products"
+        :key="product.id"
+      >
+        <div class="col-4">
+          <img
+            :src="product.url"
+            :alt="product.title"
+            width="120"
+            height="120"
+            class="rounded"
+          />
+        </div>
+        <div class="col">
+          <div class="d-flex flex-column h-100 justify-content-between">
+            <h3>{{ product.title }}</h3>
+            <div class="d-flex justify-content-between">
+              <span
+                ><strong>{{
+                  formatUnitPrice(product.unit_price)
+                }}</strong></span
+              >
+              <div class="product-amount">
+                <button type="button" class="btn btn-danger">trash</button>
+                <span>{{ product.amount }}</span>
+                <button type="button" class="btn btn-danger">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <div class="d-flex justify-content-between">
+            <span
+              >Total: <strong>{{ formatUnitPrice(total) }}</strong></span
+            >
+            <button type="button" class="btn btn-danger">
+              Finalizar pedido
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+    <div v-else>Nenhum produto selecionado</div>
   </b-modal>
 </template>
 
@@ -42,8 +85,16 @@ export default {
       products: [],
     };
   },
-  created() {
-    this.getCart();
+  watch: {
+    showModal() {
+      this.getCart();
+    },
+  },
+  computed: {
+    total() {
+      const total = this.products.map((product) => product.total);
+      return total.reduce((prev, acc) => prev + acc, 0);
+    },
   },
   methods: {
     formatDate,
@@ -52,9 +103,12 @@ export default {
       const cart = getCart();
 
       if (cart) {
+        this.products = [];
         const keys = Object.keys(cart);
         keys.forEach((key) => this.products.push(cart[key]));
       }
+
+      console.log({ products: this.products });
     },
     closeModal() {
       this.$emit("closeModal");
